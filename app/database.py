@@ -10,3 +10,12 @@ engine = create_engine('postgresql://postgres:%s@localhost/learnfastapi' % quote
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base() 
+
+
+# creating Dependency 
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
