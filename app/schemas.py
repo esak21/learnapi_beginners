@@ -2,6 +2,8 @@ from typing import Optional
 from pydantic import BaseModel, EmailStr
 from datetime import datetime
 
+from pydantic.types import conint
+
 # Creating a Pydantic Class for Data Validation 
 
 
@@ -44,6 +46,14 @@ class PostResponse(PostBase):
     class Config:
         orm_mode = True
 
+# Schema class For Votes and post Join 
+class PostOut(BaseModel):
+    id: int
+    Post: PostResponse
+    votes: int
+
+    class Config:
+        orm_mode = True
 
 # Defining the login Schema 
 
@@ -60,3 +70,11 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     id: Optional[str] = None
+
+
+
+# Define Vote Schema 
+
+class Vote(BaseModel):
+    post_id: int
+    direction: conint(le = 1)
