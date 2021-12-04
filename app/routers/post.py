@@ -86,7 +86,7 @@ def get_posts(db:Session = Depends(get_db), limit:int = 10, skip:int = 0, search
     posts = db.query(models.Post).filter(models.Post.title.contains(search)).limit(limit).offset(skip).all()
     # By default it will be left Inner Join 
     # 
-    results = db.query(models.Post.id, models.Post, func.count(models.Vote.post_id).label('votes')).join(models.Vote, models.Vote.post_id == models.Post.id, isouter=True).group_by(models.Post.id).all()
+    results = db.query(models.Post.id, models.Post, func.count(models.Vote.post_id).label('votes')).join(models.Vote, models.Vote.post_id == models.Post.id, isouter=True).group_by(models.Post.id).filter(models.Post.title.contains(search)).limit(limit).offset(skip).all()
     #print(results)
     return  results
 
@@ -115,9 +115,10 @@ def create_posts(post:schemas.PostCreate , db:Session = Depends(get_db), current
 
 
 
-@router.get("/{id}", response_model=schemas.PostResponse)
+@router.get("/{id}", response_model=schemas.PostOut)
 def get_post(id:int, db:Session = Depends(get_db)):
-    post = db.query(models.Post).filter(models.Post.id == id).first()
+    #post = db.query(models.Post).filter(models.Post.id == id).first()
+    post = db.query(models.Post.id, models.Post, func.count(models.Vote.post_id).label('votes')).join(models.Vote, models.Vote.post_id == models.Post.id, isouter=True).group_by(models.Post.id).filter(models.Post.id == id).first()
     if post is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="POst ID {id} is not created")
     return post

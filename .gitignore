@@ -131,3 +131,5 @@ dmypy.json
 
 ## Unchecking th eenv File 
 .env
+venv/
+__pycache__
