@@ -16,7 +16,8 @@ from urllib.parse import quote
 # Getting the Database URL 
 my_password='%s'% quote('esak@123')
 print(my_password)
-db_url = f'postgresql+psycopg2://{settings.database_username}:{settings.database_password}@{settings.database_hostname}:{settings.database_port}/{settings.database_name}'
+db_url = f'postgresql+psycopg2://apiuser:apiuser@{settings.database_hostname}:{settings.database_port}/{settings.database_name}'
+#db_url = f'postgresql+psycopg2://{settings.database_username}:{settings.database_password}@{settings.database_hostname}:{settings.database_port}/{settings.database_name}'
 
 
 config = context.config
