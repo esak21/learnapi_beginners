@@ -6,7 +6,8 @@ from .config import settings
 
 SQLALCHEMY_DATABASE_URL = 'postgresql://postgres:%s@localhost/learnfastapi' 
 
-engine = create_engine(f'postgresql://{settings.database_username}:%s@{settings.database_hostname}/{settings.database_name}' % quote('esak@123'))
+#engine = create_engine(f'postgresql://{settings.database_username}:%s@{settings.database_hostname}/{settings.database_name}' % quote('esak@123'))
+engine = create_engine(f'postgresql://{settings.database_username}:{settings.database_password}@{settings.database_hostname}/{settings.database_name}')
 
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
