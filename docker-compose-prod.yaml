@@ -1,0 +1,35 @@
+version: '3'
+services:
+  api:
+    image: esak2021/fastapi
+    depends_on:
+      - postgres
+    ports:
+      - 80:8000
+    # volumes: # example of Bind Mount 
+    #   - ./:/usr/src/app:ro
+    #command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload   # weoverride the code 
+
+    # env_file:
+    #   - app/.env
+    environment:
+      - ALGORITHM=HS256
+      - DATABASE_HOSTNAME=${DATABASE_HOSTNAME}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - DATABASE_PORT=${DATABASE_PORT}
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_USERNAME=${DATABASE_USERNAME}
+      - SECRET_KEY=${SECRET_KEY}
+      - ACCESS_TOKEN_EXPIRE_MINUTES=${ACCESS_TOKEN_EXPIRE_MINUTES}
+  
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=${DATABASE_NAME}
+
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+
+volumes:
+  postgres-db:

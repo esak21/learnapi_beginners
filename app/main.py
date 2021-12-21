@@ -17,9 +17,7 @@ app = FastAPI()
 
 # ADDING Middleware 
 origins = [
-    "http://localhost",
-    "http://localhost:8080",
-    "https://www.google.com"
+    '*',
 ]
 
 app.add_middleware(
@@ -37,3 +35,6 @@ app.include_router(auth.router)
 app.include_router(vote.router)
 
 
+@app.get("/")
+def home():
+    return {"message": "Welcome to api"}

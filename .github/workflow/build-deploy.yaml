@@ -1,0 +1,13 @@
+name: Build and Deploy api 
+
+on: [push , pull_request ]
+
+jobs:
+    job1:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Pull Git Repo 
+              uses: actions/checkout@v2
+
+            - name: Say hi to the world
+              run:  echo "Say hi to the World using echo"
