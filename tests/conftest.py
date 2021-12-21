@@ -11,7 +11,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from jose import JWTError, jwt
 import  pytest
 
-TEST_HOST_URL=f'postgresql://{settings.database_username}:{settings.database_password}@172.21.0.2:5432/testfastapi'
+TEST_HOST_URL=f'postgresql://{settings.database_username}:{settings.database_password}@{settings.database_hostname}:{settings.database_port}/${settings.database_name}'
 # create Engine 
 engine = create_engine(TEST_HOST_URL)
 
