@@ -3,7 +3,7 @@ name: Build and Deploy api
 on: [push , pull_request ]
 
 jobs:
-    job1:
+    Build:
         environment:
           name: QA
         env:
@@ -69,5 +69,13 @@ jobs:
                 cache-to: type=local,dest=/tmp/.buildx-cache
             - name: Image diges 
               run: echo ${{ steps.docker_build.outputs.digest}}
+            
+    Deploy:
+      runs-on: ubuntu-latest
+      needs: [Build] # Job run in sequential Order 
+      steps:
+        - name: push changes to production 
+          run: echo "Deploying to Production Steps"
+
 
 
